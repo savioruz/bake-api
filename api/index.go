@@ -15,8 +15,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	validator := config.NewValidator()
 	jwt := config.NewJWT(viper)
 
-	router := http.NewServeMux()
-
 	err := config.Bootstrap(&config.BootstrapConfig{
 		Viper:     viper,
 		Log:       log,
@@ -27,6 +25,4 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalf("Failed to bootstrap app: %v", err)
 	}
-
-	router.ServeHTTP(w, r)
 }
