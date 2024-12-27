@@ -1,0 +1,624 @@
+basePath: /api/v1
+definitions:
+  github_com_savioruz_bake_internal_domain_model.AddressRequest:
+    properties:
+      address_line:
+        maxLength: 255
+        minLength: 5
+        type: string
+      city:
+        maxLength: 50
+        minLength: 2
+        type: string
+      country:
+        maxLength: 50
+        minLength: 2
+        type: string
+      postal_code:
+        maxLength: 20
+        minLength: 5
+        type: string
+      state:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - address_line
+    - city
+    - country
+    - postal_code
+    - state
+    type: object
+  github_com_savioruz_bake_internal_domain_model.AddressResponse:
+    properties:
+      address_line:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      postal_code:
+        type: string
+      state:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  github_com_savioruz_bake_internal_domain_model.CreateProductRequest:
+    properties:
+      description:
+        maxLength: 255
+        minLength: 3
+        type: string
+      image:
+        type: string
+      name:
+        maxLength: 255
+        minLength: 3
+        type: string
+      price:
+        minimum: 0
+        type: number
+      stock:
+        minimum: 0
+        type: integer
+    required:
+    - description
+    - image
+    - name
+    - price
+    - stock
+    type: object
+  github_com_savioruz_bake_internal_domain_model.DeleteProductRequest:
+    properties:
+      id:
+        type: string
+    required:
+    - id
+    type: object
+  github_com_savioruz_bake_internal_domain_model.ErrorResponse:
+    properties:
+      error:
+        additionalProperties: true
+        type: object
+    type: object
+  github_com_savioruz_bake_internal_domain_model.Paginate:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_items:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  github_com_savioruz_bake_internal_domain_model.ProductResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      stock:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  github_com_savioruz_bake_internal_domain_model.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  ? github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_ProductResponse
+  : properties:
+      data:
+        items:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ProductResponse'
+        type: array
+      paginate:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate'
+    type: object
+  ? github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_DeleteProductRequest
+  : properties:
+      data:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.DeleteProductRequest'
+      paginate:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate'
+    type: object
+  github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_ProductResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ProductResponse'
+      paginate:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate'
+    type: object
+  github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_TokenResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.TokenResponse'
+      paginate:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate'
+    type: object
+  github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_UserResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.UserResponse'
+      paginate:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate'
+    type: object
+  github_com_savioruz_bake_internal_domain_model.TokenResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  github_com_savioruz_bake_internal_domain_model.UpdateProductRequest:
+    properties:
+      description:
+        maxLength: 255
+        minLength: 3
+        type: string
+      image:
+        type: string
+      name:
+        maxLength: 255
+        minLength: 3
+        type: string
+      price:
+        minimum: 0
+        type: number
+      stock:
+        minimum: 0
+        type: integer
+    type: object
+  github_com_savioruz_bake_internal_domain_model.UserLoginRequest:
+    properties:
+      email:
+        maxLength: 100
+        minLength: 3
+        type: string
+      password:
+        maxLength: 255
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  github_com_savioruz_bake_internal_domain_model.UserRegisterRequest:
+    properties:
+      address:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.AddressRequest'
+      email:
+        maxLength: 100
+        minLength: 3
+        type: string
+      name:
+        maxLength: 100
+        minLength: 5
+        type: string
+      password:
+        maxLength: 255
+        minLength: 8
+        type: string
+      phone:
+        maxLength: 15
+        minLength: 10
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - phone
+    type: object
+  github_com_savioruz_bake_internal_domain_model.UserResponse:
+    properties:
+      address:
+        $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.AddressResponse'
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact:
+    email: jakueenak@gmail.com
+    name: API Support
+  description: This is an auto-generated API Docs.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Bake API
+  version: "0.1"
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Get all products
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      - description: Sort By
+        in: query
+        name: sort_by
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Get all products
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Create a new product
+      parameters:
+      - description: Product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new product
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_DeleteProductRequest'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a product
+      tags:
+      - products
+    get:
+      consumes:
+      - application/json
+      description: Get product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Get product by ID
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Update a product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a product
+      tags:
+      - products
+  /products/search:
+    get:
+      consumes:
+      - application/json
+      description: Search products
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        type: string
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: Description
+        in: query
+        name: description
+        type: string
+      - description: Price
+        in: query
+        name: price
+        type: string
+      - description: Stock
+        in: query
+        name: stock
+        type: string
+      - description: Image
+        in: query
+        name: image
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      - description: Sort By
+        in: query
+        name: sort_by
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Search products
+      tags:
+      - products
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.UserRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Register a new user
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Login a user
+      tags:
+      - users
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      description: Get current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_UserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get current user
+      tags:
+      - users
+  /users/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh a user's token
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse'
+      summary: Refresh a user's token
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
