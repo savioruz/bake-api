@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/rs/cors"
 	"github.com/savioruz/bake/internal/builder"
 	e "github.com/savioruz/bake/pkg/error"
 	"github.com/sirupsen/logrus"
@@ -171,5 +172,15 @@ func (s *Server) Start() error {
 	addr := fmt.Sprintf(":%s", s.port)
 	s.log.Info("Server starting on port ", s.port)
 
-	return http.ListenAndServe(addr, s.mux)
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true,
+		Debug:            false,
+	})
+
+	handler := corsHandler.Handler(s.mux)
+
+	return http.ListenAndServe(addr, handler)
 }
