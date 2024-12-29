@@ -1,4 +1,4 @@
-APP_NAME = trinityknights.backend
+APP_NAME = bake-api
 APP_VERSION = 0.0.1
 
 clean:
@@ -21,9 +21,9 @@ test: clean critic security
 	go tool cover -func=cover.out
 
 docker.build:
-	sed -i 's/\[\"\/build\/trinityknights.backend\", \"\/\"\]/\[\"\/build\/trinityknights.backend\", \"\/build\/\.env\", \"\/\"\]/' Dockerfile
+	sed -i 's/\[\"\/build\/bake-api\", \"\/\"\]/\[\"\/build\/bake-api\", \"\/build\/\.env\", \"\/\"\]/' Dockerfile
 	docker build -t $(APP_NAME):$(APP_VERSION) .
-	sed -i 's/\[\"\/build\/trinityknights.backend\", \"\/build\/\.env\"/\[\"\/build\/trinityknights.backend\"/' Dockerfile
+	sed -i 's/\[\"\/build\/bake-api\", \"\/build\/\.env\"/\[\"\/build\/bake-api\"/' Dockerfile
 
 docker.run: docker.build
 	docker run -d -p 3000:3000 --name $(APP_NAME) $(APP_NAME):$(APP_VERSION)
@@ -33,9 +33,9 @@ docker.stop:
 	docker rm $(APP_NAME)
 
 dc.build:
-	sed -i 's/\[\"\/build\/trinityknights.backend\", \"\/\"\]/\[\"\/build\/trinityknights.backend\", \"\/build\/\.env\", \"\/\"\]/' Dockerfile
+	sed -i 's/\[\"\/build\/bake-api\", \"\/\"\]/\[\"\/build\/bake-api\", \"\/build\/\.env\", \"\/\"\]/' Dockerfile
 	docker compose -f docker-compose.yml build
-	sed -i 's/\[\"\/build\/trinityknights.backend\", \"\/build\/\.env\"/\[\"\/build\/trinityknights.backend\"/' Dockerfile
+	sed -i 's/\[\"\/build\/bake-api\", \"\/build\/\.env\"/\[\"\/build\/bake-api\"/' Dockerfile
 
 dc.up: dc.build
 	docker compose up -d
