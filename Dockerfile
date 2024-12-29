@@ -16,7 +16,7 @@ COPY . .
 
 # Set necessary environment variables needed for our image and build the API server.
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
-RUN go build -ldflags="-s -w" -o bake ./cmd/app
+RUN go build -ldflags="-s -w" -o bake-api ./cmd/app
 
 #stage2
 FROM scratch
@@ -25,10 +25,10 @@ FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy binary and config files from /build to root folder of scratch container.
-COPY --from=builder ["/build/bake", "/"]
+COPY --from=builder ["/build/bake-api", "/"]
 
 # Command to run when starting the container.
-ENTRYPOINT ["/bake"]
+ENTRYPOINT ["/bake-api"]
 
 # Expose port 3000 to the outside world.
 EXPOSE 3000
