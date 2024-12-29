@@ -19,7 +19,7 @@ type ProductQuery struct {
 	Description *string    `query:"description,omitempty" validate:"omitempty,min=3,max=255"`
 	Price       *float64   `query:"price,omitempty" validate:"omitempty,min=0"`
 	Stock       *int       `query:"stock,omitempty" validate:"omitempty,min=0"`
-	Image       *string    `query:"image,omitempty" validate:"omitempty,"`
+	Image       *string    `query:"image,omitempty" validate:"omitempty"`
 	CreatedAt   *time.Time `query:"created_at,omitempty" validate:"omitempty,datetime=2006-01-02 15:04:05"`
 	UpdatedAt   *time.Time `query:"updated_at,omitempty" validate:"omitempty,datetime=2006-01-02 15:04:05"`
 }
@@ -40,15 +40,15 @@ type CreateProductRequest struct {
 	Description string  `json:"description" validate:"required,min=3,max=255"`
 	Price       float64 `json:"price" validate:"required,min=0"`
 	Stock       int     `json:"stock" validate:"required,min=0"`
-	Image       string  `json:"image" validate:"required,text"`
+	Image       string  `json:"image" validate:"required"`
 }
 
 type UpdateProductRequest struct {
-	Name        string  `json:"name" validate:"omitempty,min=3,max=255"`
-	Description string  `json:"description" validate:"omitempty,min=3,max=255"`
-	Price       float64 `json:"price" validate:"omitempty,min=0"`
-	Stock       int     `json:"stock" validate:"omitempty,min=0"`
-	Image       string  `json:"image" validate:"omitempty,text"`
+	Name        *string  `json:"name,omitempty" validate:"omitempty,min=3,max=255"`
+	Description *string  `json:"description,omitempty" validate:"omitempty,min=3,max=255"`
+	Price       *float64 `json:"price,omitempty" validate:"omitempty,min=0"`
+	Stock       *int     `json:"stock,omitempty" validate:"omitempty,min=0"`
+	Image       *string  `json:"image,omitempty" validate:"omitempty"`
 }
 
 type DeleteProductRequest struct {

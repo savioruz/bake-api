@@ -16,6 +16,191 @@
     },
     "basePath": "/api/v1",
     "paths": {
+        "/orders": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get all orders",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get all orders",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "id",
+                            "user_id",
+                            "product_id",
+                            "address_id",
+                            "quantity",
+                            "total_price",
+                            "status",
+                            "created_at",
+                            "updated_at"
+                        ],
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_OrderResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create a new order",
+                "parameters": [
+                    {
+                        "description": "Order",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.CreateOrderRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_OrderResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get order by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get order by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_OrderResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/products": {
             "get": {
                 "description": "Get all products",
@@ -43,15 +228,29 @@
                         "in": "query"
                     },
                     {
+                        "enum": [
+                            "id",
+                            "name",
+                            "description",
+                            "price",
+                            "stock",
+                            "image",
+                            "created_at",
+                            "updated_at"
+                        ],
                         "type": "string",
                         "description": "Sort",
                         "name": "sort",
                         "in": "query"
                     },
                     {
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
                         "type": "string",
-                        "description": "Sort By",
-                        "name": "sort_by",
+                        "description": "Order",
+                        "name": "order",
                         "in": "query"
                     }
                 ],
@@ -189,15 +388,29 @@
                         "in": "query"
                     },
                     {
+                        "enum": [
+                            "id",
+                            "name",
+                            "description",
+                            "price",
+                            "stock",
+                            "image",
+                            "created_at",
+                            "updated_at"
+                        ],
                         "type": "string",
                         "description": "Sort",
                         "name": "sort",
                         "in": "query"
                     },
                     {
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
                         "type": "string",
-                        "description": "Sort By",
-                        "name": "sort_by",
+                        "description": "Order",
+                        "name": "order",
                         "in": "query"
                     }
                 ],
@@ -568,6 +781,99 @@
         }
     },
     "definitions": {
+        "github_com_savioruz_bake_internal_domain_entity.Address": {
+            "type": "object",
+            "properties": {
+                "address_line": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "postal_code": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_entity.User"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_savioruz_bake_internal_domain_entity.Product": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "stock": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_savioruz_bake_internal_domain_entity.User": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_savioruz_bake_internal_domain_model.AddressRequest": {
             "type": "object",
             "required": [
@@ -637,6 +943,26 @@
                 }
             }
         },
+        "github_com_savioruz_bake_internal_domain_model.CreateOrderRequest": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity",
+                "user_id"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_savioruz_bake_internal_domain_model.CreateProductRequest": {
             "type": "object",
             "required": [
@@ -687,6 +1013,44 @@
                 "error": {
                     "type": "object",
                     "additionalProperties": true
+                }
+            }
+        },
+        "github_com_savioruz_bake_internal_domain_model.OrderResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_entity.Address"
+                },
+                "address_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "product": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_entity.Product"
+                },
+                "product_id": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "total_price": {
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
                 }
             }
         },
@@ -747,6 +1111,20 @@
                 }
             }
         },
+        "github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_OrderResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.OrderResponse"
+                    }
+                },
+                "paginate": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate"
+                }
+            }
+        },
         "github_com_savioruz_bake_internal_domain_model.SuccessResponse-array_github_com_savioruz_bake_internal_domain_model_ProductResponse": {
             "type": "object",
             "properties": {
@@ -766,6 +1144,17 @@
             "properties": {
                 "data": {
                     "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.DeleteProductRequest"
+                },
+                "paginate": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate"
+                }
+            }
+        },
+        "github_com_savioruz_bake_internal_domain_model.SuccessResponse-github_com_savioruz_bake_internal_domain_model_OrderResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.OrderResponse"
                 },
                 "paginate": {
                     "$ref": "#/definitions/github_com_savioruz_bake_internal_domain_model.Paginate"

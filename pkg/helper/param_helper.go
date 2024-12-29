@@ -2,9 +2,13 @@ package helper
 
 import (
 	"net/http"
+	"strings"
 )
 
 func ParseParam(r *http.Request) string {
-	id := r.URL.Query().Get("id")
-	return id
+	parts := strings.Split(r.URL.Path, "/")
+	if len(parts) > 0 {
+		return parts[len(parts)-1]
+	}
+	return ""
 }

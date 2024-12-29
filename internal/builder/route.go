@@ -24,6 +24,7 @@ type Config struct {
 	AuthMiddleware *middleware.AuthMiddleware
 	UserHandler    *handler.UserHandler
 	ProductHandler *handler.ProductHandler
+	OrderHandler   *handler.OrderHandler
 }
 
 // Helper function to prefix routes with /api/v1
@@ -102,6 +103,21 @@ func PrivateRoutes(c *Config) []Routes {
 			Method:  http.MethodDelete,
 			Path:    prefixRoute("/products/{id}"),
 			Handler: c.AuthMiddleware.RequireRole([]string{"admin"}, c.ProductHandler.Delete),
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    prefixRoute("/orders"),
+			Handler: c.AuthMiddleware.RequireRole([]string{"admin", "user"}, c.OrderHandler.GetAll),
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    prefixRoute("/orders/{id}"),
+			Handler: c.AuthMiddleware.RequireRole([]string{"admin", "user"}, c.OrderHandler.GetByID),
+		},
+		{
+			Method:  http.MethodPost,
+			Path:    prefixRoute("/orders"),
+			Handler: c.AuthMiddleware.RequireRole([]string{"admin", "user"}, c.OrderHandler.Create),
 		},
 	}
 }

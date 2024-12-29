@@ -12,7 +12,7 @@ type Address struct {
 	Country     string    `db:"country" json:"country"`
 	CreatedAt   time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
-	User        *User     `db:"user" json:"user"`
+	User        *User     `db:"-" json:"user,omitempty"`
 }
 
 func (Address) TableName() string {

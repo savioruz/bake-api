@@ -32,13 +32,17 @@ func Bootstrap(c *BootstrapConfig) error {
 	userRepository := repository.NewUserRepository(c.DB)
 	addressRepository := repository.NewAddressRepository(c.DB)
 	productRepository := repository.NewProductRepository(c.DB)
+	orderRepository := repository.NewOrderRepository(c.DB)
 
 	// Initialize services
 	userService := service.NewUserService(userRepository, addressRepository, c.DB, c.Log, c.Validator, jwtService)
 	productService := service.NewProductService(productRepository, c.DB, c.Log, c.Validator)
+	orderService := service.NewOrderService(orderRepository, productRepository, addressRepository, c.DB, c.Log, c.Validator)
+
 	// Initialize handlers
 	userHandler := handler.NewUserHandler(userService, c.Log)
 	productHandler := handler.NewProductHandler(productService, c.Log)
+	orderHandler := handler.NewOrderHandler(orderService, c.Log)
 
 	// Initialize server
 	server := NewServer(c.Viper, c.Log)
@@ -48,6 +52,7 @@ func Bootstrap(c *BootstrapConfig) error {
 		AuthMiddleware: authMiddleware,
 		UserHandler:    userHandler,
 		ProductHandler: productHandler,
+		OrderHandler:   orderHandler,
 	}
 
 	publicRoutes := builder.PublicRoutes(routeConfig)

@@ -281,14 +281,41 @@ func (s *ProductService) Update(ctx context.Context, id *model.DeleteProductRequ
 		}
 	}()
 
+	existingProduct, err := s.ProductRepository.GetByID(tx, id.ID)
+	if err != nil {
+		s.Log.Errorf("error getting existing product: %v", err)
+		if err == sql.ErrNoRows {
+			return nil, e.ErrNotFound
+		}
+		return nil, err
+	}
+
 	data := &entity.Product{
 		ID:          id.ID,
-		Name:        request.Name,
-		Description: request.Description,
-		Price:       request.Price,
-		Stock:       request.Stock,
-		Image:       request.Image,
+		Name:        existingProduct.Name,
+		Description: existingProduct.Description,
+		Price:       existingProduct.Price,
+		Stock:       existingProduct.Stock,
+		Image:       existingProduct.Image,
+		CreatedAt:   existingProduct.CreatedAt,
 		UpdatedAt:   time.Now(),
+	}
+
+	// Only update fields that are provided in the request
+	if request.Name != nil {
+		data.Name = *request.Name
+	}
+	if request.Description != nil {
+		data.Description = *request.Description
+	}
+	if request.Price != nil {
+		data.Price = *request.Price
+	}
+	if request.Stock != nil {
+		data.Stock = *request.Stock
+	}
+	if request.Image != nil {
+		data.Image = *request.Image
 	}
 
 	if err := s.ProductRepository.Update(tx, data); err != nil {

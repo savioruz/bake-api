@@ -119,22 +119,52 @@ func (r *Router) Handle(method, path string, handler http.HandlerFunc) {
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	// Remove prefix from path
 	path := strings.TrimPrefix(req.URL.Path, r.prefix)
+
+	// Try exact match first
 	key := req.Method + ":" + path
-
-	r.log.WithFields(logrus.Fields{
-		"method": req.Method,
-		"path":   path,
-		"key":    key,
-	}).Debug("Looking for route")
-
-	// Find handler
 	if handler, ok := r.routes[key]; ok {
 		handler(w, req)
 		return
 	}
 
+	// If no exact match, try matching patterns with parameters
+	for routeKey, handler := range r.routes {
+		routeMethod := strings.Split(routeKey, ":")[0]
+		routePath := strings.Split(routeKey, ":")[1]
+
+		// Skip if methods don't match
+		if routeMethod != req.Method {
+			continue
+		}
+
+		// Convert route pattern to regex
+		routeParts := strings.Split(routePath, "/")
+		pathParts := strings.Split(path, "/")
+
+		if len(routeParts) != len(pathParts) {
+			continue
+		}
+
+		matches := true
+		for i := 0; i < len(routeParts); i++ {
+			if strings.HasPrefix(routeParts[i], "{") && strings.HasSuffix(routeParts[i], "}") {
+				// This is a parameter, it matches anything
+				continue
+			}
+			if routeParts[i] != pathParts[i] {
+				matches = false
+				break
+			}
+		}
+
+		if matches {
+			handler(w, req)
+			return
+		}
+	}
+
 	// No route found
-	e.ErrorHandler(w, req, http.StatusNotFound, e.ErrNotFound)
+	e.ErrorHandler(w, req, http.StatusNotFound, e.ErrRouteNotFound)
 }
 
 func (s *Server) Start() error {
